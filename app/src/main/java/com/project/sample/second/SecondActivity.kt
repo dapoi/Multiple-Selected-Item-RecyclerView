@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.sample.databinding.ActivitySecondBinding
+import com.project.sample.model.People
 
 class SecondActivity : AppCompatActivity() {
 
@@ -19,16 +20,18 @@ class SecondActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        val intent = intent.getStringArrayExtra(EXTRA_SELECTED_NAME)
+        val data = intent.getParcelableArrayExtra(EXTRA_SELECTED)
         binding.recyclerView.apply {
             adapter = secondAdapter
             layoutManager = LinearLayoutManager(this@SecondActivity)
             setHasFixedSize(true)
-            intent?.let { secondAdapter.setListName(it.toList()) }
+            data?.let {
+                secondAdapter.setListPeople(it.toList() as List<People>)
+            }
         }
     }
 
     companion object {
-        const val EXTRA_SELECTED_NAME = "extra_selected_name"
+        const val EXTRA_SELECTED = "extra_selected_data"
     }
 }

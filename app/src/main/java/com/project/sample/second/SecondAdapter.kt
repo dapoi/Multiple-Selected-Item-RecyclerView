@@ -4,22 +4,24 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.project.sample.R
-import com.project.sample.databinding.ItemListNameBinding
+import com.project.sample.databinding.ItemListPeopleBinding
+import com.project.sample.model.People
 
 class SecondAdapter : RecyclerView.Adapter<SecondAdapter.SecondViewHolder>() {
 
-    private var listName = listOf<String>()
+    private var listPeople = ArrayList<People>()
 
-    fun setListName(toList: List<String>) {
-        listName = toList
+    fun setListPeople(toList: List<People>) {
+        listPeople.clear()
+        listPeople.addAll(toList)
         notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SecondViewHolder {
         return SecondViewHolder(
-            ItemListNameBinding.bind(
+            ItemListPeopleBinding.bind(
                 LayoutInflater.from(parent.context).inflate(
-                    R.layout.item_list_name,
+                    R.layout.item_list_people,
                     parent,
                     false
                 )
@@ -28,15 +30,18 @@ class SecondAdapter : RecyclerView.Adapter<SecondAdapter.SecondViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: SecondViewHolder, position: Int) {
-        holder.bind(listName[position])
+        holder.bind(listPeople[position])
     }
 
-    override fun getItemCount(): Int = listName.size
+    override fun getItemCount(): Int = listPeople.size
 
-    class SecondViewHolder(private val binding: ItemListNameBinding) :
+    class SecondViewHolder(private val binding: ItemListPeopleBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: String) {
-            binding.name.text = item
+        fun bind(item: People) {
+            with(binding) {
+                name.text = item.name
+                age.text = item.age.toString()
+            }
         }
     }
 }

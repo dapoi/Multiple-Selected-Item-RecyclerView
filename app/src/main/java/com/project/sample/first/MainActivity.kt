@@ -2,10 +2,10 @@ package com.project.sample.first
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.sample.databinding.ActivityMainBinding
+import com.project.sample.model.People
 import com.project.sample.second.SecondActivity
 
 class MainActivity : AppCompatActivity() {
@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         mainAdapter = MainAdapter()
-        mainAdapter.setListName(generateRandomName())
+        mainAdapter.setListPeople(PeopleData.listPeople)
         binding.apply {
             recyclerView.adapter = mainAdapter
             recyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
@@ -32,20 +32,18 @@ class MainActivity : AppCompatActivity() {
         binding.button.setOnClickListener {
             val selectedList = mainAdapter.getSelectedItemList()
             val intent = Intent(this, SecondActivity::class.java)
-            intent.putExtra(SecondActivity.EXTRA_SELECTED_NAME, selectedList.toTypedArray())
+            intent.putExtra(SecondActivity.EXTRA_SELECTED, selectedList.toTypedArray())
             startActivity(intent)
         }
     }
 
-    private fun generateRandomName(): List<String> {
-        val listName = listOf(
-            "Ade",
-            "Adi",
-            "Adit",
-            "Aditya",
-            "Aditya Pratama",
-            "Aditya Pratama Putra",
+    object PeopleData {
+        val listPeople = listOf(
+            People("A", 15),
+            People("B", 16),
+            People("C", 17),
+            People("D", 18),
+            People("E", 19),
         )
-        return listName.shuffled()
     }
 }
